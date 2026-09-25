@@ -1,0 +1,4 @@
+# Nothing from this directory is copied into the image, and nothing should be.
+# Excluding everything keeps an accidental file, credential or checkout out of the
+# build context rather than relying on the Dockerfile never referencing it.
+*

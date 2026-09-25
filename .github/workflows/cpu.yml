@@ -1,0 +1,79 @@
+# CPU gates. Unprivileged by construction: a read-only token, no persisted checkout
+# credentials, no `pull_request_target`, no self-hosted runner, no publication and no GPU.
+# Fork pull requests run the public job only and never see the private denylist secret.
+name: CPU gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public:
+    name: CPU gates without secrets
+    runs-on: ubuntu-24.04
+    steps:
+      # The pull request head, not the synthetic merge commit, so the history audit sees the
+      # actual authored commits. Full history is required by the guard and by gitleaks.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install the pinned Rust toolchain
+        run: rustup show active-toolchain || rustup toolchain install
+
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.10.12"
+
+      # install-action resolves each tool from its official release and verifies the published
+      # checksum. gitleaks is installed as the CLI binary, not as the licensed action.
+      - uses: taiki-e/install-action@9114bf4d891761788c546334fd37538eae1bf8b3 # v2.87.16
+        with:
+          tool: cargo-nextest@0.9.145,cargo-llvm-cov@0.9.1,cargo-deny@0.20.2,gitleaks@8.30.1,actionlint@1.7.12
+
+      # Populate the cache once, online, so every gate below can run with --offline --locked.
+      - name: Materialise the pinned Python environment
+        run: uv sync --project reference --locked --all-groups
+
+      - name: Run the CPU gates
+        run: ./scripts/check-cpu.sh --public-ci
+
+  private-identifiers:
+    name: Private identifier audit
+    # Only trusted pushes to main. Fork pull requests cannot reach this job, so the secret is
+    # never exposed to unreviewed code. This is the private half of G-10, not an optional warning.
+    needs: public
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Write the private denylist
+        env:
+          DENYLIST: ${{ secrets.TQ_GUARD_DENYLIST }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DENYLIST}" ]; then
+            echo "The private denylist secret is absent: G-10 cannot pass." >&2
+            exit 1
+          fi
+          printf '%s\n' "${DENYLIST}" > "${RUNNER_TEMP}/guard-denylist"
+
+      - name: Audit the tree and history against the private denylist
+        env:
+          TQ_GUARD_REQUIRE_DENYLIST: "1"
+          TQ_GUARD_DENYLIST: ${{ runner.temp }}/guard-denylist
+        run: python3 tools/git-guard.py audit

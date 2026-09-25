@@ -1,0 +1,13 @@
+[package]
+name = "tq-testkit"
+version = "0.1.0"
+description = "Shared deterministic test inputs for the TensorQuay engine; test infrastructure only."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]

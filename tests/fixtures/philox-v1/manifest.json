@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "algorithm": "Philox4x32-10",
+  "mapping": "tq-philox-v1",
+  "uniform": "high24-times-2^-24",
+  "source": {
+    "repository": "https://github.com/DEShawResearch/random123",
+    "revision": "726a093cd9a73f3ec3c8d7a70ff10ed8efec8d13",
+    "tag": "v1.14.0",
+    "sha256": {
+      "include/Random123/philox.h": "6c2ef219a855885499a73b338d5f41dafe079618b2dae2f60ea86ee785d771e2",
+      "tests/kat_vectors": "aab5ebabf40003f63d6d87b24cbd2c8a02652e00cf8bad64226fd50586929183"
+    },
+    "claim": "Block and stream expected words were obtained by compiling and calling the original Philox4x32_R<10> in a separate clean checkout, then cross-checked with an independent 16-bit-limb scalar oracle. The first three block cases are the official ten-round known-answer vectors. No upstream source is stored in this repository. Uniform bits are derived from the integer significand/exponent mapping and checked by exact power-of-two conversion."
+  },
+  "encoding": "TSV hexadecimal unsigned words; canonical digest bytes are little-endian. blocks inputs=6*u32, outputs=4*u32 per row. streams inputs=seed,stream,start,count as 4*u64, outputs=count*u32 per row in file order. uniform inputs=u32 and outputs=f32 bit pattern as u32. Comment lines do not participate in canonical data digests.",
+  "seeds": [
+    "0000000000000000",
+    "0000000000000001",
+    "0123456789abcdef",
+    "8000000000000000",
+    "ffffffffffffffff"
+  ],
+  "streams": [
+    {
+      "test_id": "RNG-002",
+      "stream": "0000000000000000"
+    },
+    {
+      "test_id": "RNG-003",
+      "stream": "0000000000000001"
+    },
+    {
+      "test_id": "RNG-004",
+      "stream": "fedcba9876543210"
+    },
+    {
+      "test_id": "RNG-005",
+      "stream": "ffffffffffffffff"
+    }
+  ],
+  "files": {
+    "blocks.tsv": {
+      "sha256": "a34735fec07a4c53750ca145fba7ad7e406c7609262064ff8d6fc3b47534b4c9",
+      "inputs_sha256": "4a293065d9b4fede92ba7f61a1b91044b447f070809903b22407f467d813e2f7",
+      "outputs_sha256": "53add9bf78da80597d7df245c141cdf7d111520a6283909f2fbce2007221402b",
+      "cases": 199
+    },
+    "streams.tsv": {
+      "sha256": "588cb962fade34186c59aa36cee464f063f21dc25301a308a223a1c219f5f07f",
+      "inputs_sha256": "a748cd7b9ad3e04f1a58baa7205b8661bc7806c9d085999709d92453c86c5af9",
+      "outputs_sha256": "0fe2e7fbcec018d3fad1cd008abb225c50821cafebc13c2747960c120bd0f667",
+      "cases": 160
+    },
+    "uniform.tsv": {
+      "sha256": "6deef3b2c775f937b1d9e1c8d30709012aa5b1695f30c00d6892d99d8b1892a5",
+      "inputs_sha256": "eae8c688cb01a240990c6b5545ea3bb4b97bdd90c195fdc1cadab26cbcee7aed",
+      "outputs_sha256": "1a85bfd2b7e2c8228bf1070e3fb942cb745c149cda97dac6f044b8289d46954e",
+      "cases": 96
+    }
+  }
+}

@@ -1,0 +1,29 @@
+[workspace]
+resolver = "3"
+members = ["crates/tq-core", "crates/tq-testkit"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.95.0"
+license = "Apache-2.0"
+publish = false
+
+[workspace.lints.rust]
+missing_docs = "deny"
+unsafe_code = "forbid"
+# Rust compiler lints use this namespace; clippy lints are configured separately below.
+unsafe_op_in_unsafe_fn = "deny"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+undocumented_unsafe_blocks = "deny"
+multiple_unsafe_ops_per_block = "deny"
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+excessive_nesting = "deny"

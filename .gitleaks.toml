@@ -1,0 +1,35 @@
+# Secret-scanning configuration. The default gitleaks rule set is extended, never replaced, and
+# no rule is disabled or relaxed.
+#
+# One reviewed exception exists. The `generic-api-key` rule matches a SHA-256 content digest in
+# the accepted host-contracts evaluation: the 64 hexadecimal characters recorded for
+# `tests/test_host_contract_api.py`. That value is a published digest of a file in this
+# repository, reproducible with `shasum -a 256 tests/test_host_contract_api.py`, not a
+# credential. The evaluation record is not rewritten to hide a scanner finding.
+#
+# The exception is attached to that one rule, not to the path. A global `[[allowlists]]` entry
+# with `paths` is not usable here: gitleaks applies it before reading the file, so it skips the
+# whole file and every other rule with it, even under `condition = "AND"`. A rule-scoped
+# allowlist is evaluated against each candidate finding instead, so `condition = "AND"` really
+# means "this file AND this exact line".
+#
+# Measured against a defaults-only control on a copy of the evaluation record: the recorded line
+# is allowed; a changed digest, the same digest in another file, and another secret elsewhere in
+# the same file are all still reported.
+
+title = "TensorQuay secret scanning"
+
+[extend]
+useDefault = true
+
+# Only `id` is given, so the rule keeps its default description, regex, entropy and keywords
+# from the extended configuration, and gains one allowlist.
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "The recorded SHA-256 of tests/test_host_contract_api.py in its evaluation record"
+condition = "AND"
+paths = ['''(^|/)docs/evals/2026-09-20-host-contracts\.json$''']
+regexTarget = "line"
+regexes = ['''^\s*"tests/test_host_contract_api\.py": "d659260671a46fc44de76c41415e3ede2e8f20da8d3d20710bc6f74c49af8aad"\s*$''']

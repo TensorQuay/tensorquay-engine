@@ -1,0 +1,3 @@
+#!/bin/sh
+# TensorQuay git guardrails (AGENTS.md). Never bypass with --no-verify.
+exec python3 "$(git rev-parse --show-toplevel)/tools/git-guard.py" commit-msg "$1"

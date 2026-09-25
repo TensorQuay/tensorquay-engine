@@ -1,0 +1,13 @@
+# Independent coverage gate for the CPU tooling modules added in step 0.4. The lead's suites
+# load them by path, so `include` selects them by path rather than by importable package name.
+[run]
+branch = True
+include =
+    tools/cpu_checks.py
+    tools/tq_pytest_inventory.py
+
+[report]
+show_missing = True
+skip_covered = False
+
+fail_under = 100

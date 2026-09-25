@@ -1,0 +1,16 @@
+[package]
+name = "tq-core"
+version = "0.1.0"
+description = "Pure host contracts: validated kernel parameter metadata for the TensorQuay engine."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+
+[dev-dependencies]
+tq-testkit = { path = "../tq-testkit" }

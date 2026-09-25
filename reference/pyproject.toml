@@ -1,0 +1,32 @@
+[project]
+name = "tq-reference"
+version = "0.1.0"
+description = "TensorQuay Engine CPU reference implementations and test oracles (tests only; never shipped)."
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==2.3.3"]
+
+[dependency-groups]
+dev = ["pytest==8.4.2", "pytest-cov==7.0.0", "ruff==0.13.1"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["tq_reference"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]

@@ -1,0 +1,41 @@
+# Build and tool output
+target/
+/target-cov/
+/.coverage*
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.log
+.pytest_cache/
+.ruff_cache/
+# Local AI-tool and editor state (never committed; see AGENTS.md)
+.claude/
+CLAUDE.local.md
+.codex/
+.cursor/
+.aider*
+.vscode/
+.idea/
+# Secrets and large artefacts
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.pdf
+
+# Private operational notes and local environments
+/docs/HANDOVER*.md
+/internal/
+/private/
+.venv/
+.uv-cache/
+.agents/

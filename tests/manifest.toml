@@ -1,0 +1,218 @@
+# G-08 contract-to-test mapping for the CPU foundation.
+#
+# Every ID in the `CPU clause catalogue` of docs/CPU-CHECKS.md maps to the tests that carry its
+# evidence. A selector is `rust:<nextest binary-id>::<test name>` or `python:<root-relative
+# pytest node ID>`; a Python function selector also covers its collected parameter instances.
+#
+# This mapping is traceability, not proof: it says which tests claim a clause, and the CPU
+# runner separately requires those suites to pass. Judging whether the assertions are sufficient
+# stays with review.
+
+schema = 1
+scope = "cpu-foundation"
+
+# No kernel evidence exists yet. A nonempty list, or any tracked `*_kernel.rs`, fails the
+# CPU-only checker until the GPU manifest contract is written.
+kernel_specializations = []
+
+[clauses]
+
+"REF-001" = [
+  "python:reference/tests/test_mla_acceptance.py::test_ref001_scale_uses_model_key_width_not_latent_width",
+  "python:reference/tests/test_mla_acceptance.py::test_ref001_projection_split_is_per_head_interleaved_and_copied",
+  "python:reference/tests/test_mla_acceptance.py::test_ref001_analytical_boundaries",
+  "python:reference/tests/test_mla_acceptance.py::test_ref001_rejects_nonfinite_even_when_all_masked",
+  "python:reference/tests/test_mla_acceptance.py::test_ref001_split_then_attention_agrees_with_expanded_oracle",
+  "python:reference/tests/test_mla_upstream_acceptance.py::test_upstream_math_output_matches_core_and_small_decimal_oracle",
+  "python:reference/tests/test_mla_upstream_acceptance.py::test_upstream_fixture_names_source_pins_and_math_backend",
+  "python:reference/tests/test_ref001_mla_core.py::test_wider_random_case_matches_expanded_form",
+]
+
+"REF-002" = [
+  "python:reference/tests/test_moe_acceptance.py::test_experts_match_independent_decimal",
+  "python:reference/tests/test_moe_acceptance.py::test_asymmetric_clamp_edges",
+  "python:reference/tests/test_moe_acceptance.py::test_reject_first_arithmetic_overflow",
+  "python:reference/tests/test_moe_acceptance.py::test_correct_intermediate_shards_add_to_full_result",
+  "python:reference/tests/test_moe_acceptance.py::test_layouts_fresh_output_and_no_mutation",
+  "python:reference/tests/test_moe_upstream_acceptance.py::test_upstream_and_reference_match_independent_decimal",
+  "python:reference/tests/test_moe_upstream_acceptance.py::test_source_pins_eager_dispatch_and_versions",
+  "python:reference/tests/test_ref002_moe_core.py::test_wider_random_case_matches_dense_form",
+]
+
+"REF-003" = [
+  "python:reference/tests/test_ref003_decode.py::test_ref003_e2m1_all_16_codes",
+  "python:reference/tests/test_ref003_decode.py::test_ref003_e4m3_samples",
+  "python:reference/tests/test_ref003_decode.py::test_ref003_exact_decode_products",
+  "python:reference/tests/test_ref003_decode.py::test_ref003_low_nibble_holds_the_first_value",
+  "python:reference/tests/test_nvfp4_acceptance.py::test_ref003_every_fp4_code_and_signed_zero",
+  "python:reference/tests/test_nvfp4_acceptance.py::test_ref003_every_fp8_code_against_integer_format_definition",
+  "python:reference/tests/test_nvfp4_acceptance.py::test_ref003_float64_decode_does_not_round_global_scale_to_float32",
+]
+
+"REF-004" = [
+  "python:reference/tests/test_ref004_quantizer.py::test_ref004_global_scale_is_amax_over_2688_in_float32",
+  "python:reference/tests/test_ref004_quantizer.py::test_ref004_block_scale_clamps_to_448_and_2_pow_minus_9",
+  "python:reference/tests/test_ref004_quantizer.py::test_ref004_w13_shares_one_global_scale",
+  "python:reference/tests/test_ref004_quantizer.py::test_ref004_e2m1_ties_round_half_to_even_code",
+  "python:reference/tests/test_nvfp4_acceptance.py::test_ref004_pinned_upstream_results_including_dequantization_bits",
+  "python:reference/tests/test_ref004_modelopt_fixture.py::test_ref004_matches_pinned_modelopt_byte_for_byte",
+  "python:reference/tests/test_ref004_modelopt_fixture.py::test_ref004_fixture_provenance_is_the_pinned_recipe",
+]
+
+"REF-006" = [
+  "python:reference/tests/test_router_acceptance.py::test_cast_to_fp32_occurs_before_projection",
+  "python:reference/tests/test_router_acceptance.py::test_normalization_uses_the_fixed_fp32_addition_order",
+  "python:reference/tests/test_router_acceptance.py::test_ties_choose_lowest_ids_and_canonical_order",
+  "python:reference/tests/test_router_acceptance.py::test_all_288_experts_can_be_selected",
+  "python:reference/tests/test_router_acceptance.py::test_no_float64_or_fused_normalization",
+  "python:reference/tests/test_router_upstream_acceptance.py::test_actual_upstream_and_our_router_both_meet_scalar_oracle",
+  "python:reference/tests/test_router_upstream_acceptance.py::test_fixture_provenance_and_complete_case_inventory",
+  "python:reference/tests/test_ref006_router_core.py::test_selection_is_the_true_top_k_of_the_corrected_scores",
+]
+
+"RNG-001" = [
+  "rust:tq-testkit::philox_acceptance::official_known_answers",
+  "rust:tq-testkit::philox_acceptance::all_upstream_blocks",
+  "python:reference/tests/test_philox_acceptance.py::test_blocks_against_upstream_and_inverse",
+  "python:reference/tests/test_philox_acceptance.py::test_oracle_controls",
+]
+
+"RNG-002" = [
+  "rust:tq-testkit::philox_acceptance::all_upstream_streams_and_float_bits",
+  "rust:tq-testkit::philox_acceptance::exhausted_range_is_atomic",
+  "python:reference/tests/test_philox_acceptance.py::test_streams_against_upstream",
+  "python:reference/tests/test_philox_acceptance.py::test_exhausted_word_range",
+  "python:reference/tests/test_ref_philox_developer.py::test_words_are_their_blocks_read_in_lane_order",
+  "python:reference/tests/test_ref_philox_developer.py::test_distinct_streams_use_disjoint_counter_domains",
+]
+
+"RNG-003" = [
+  "rust:tq-testkit::philox_acceptance::partition_overlap_and_no_global_state",
+  "rust:tq-testkit::philox_acceptance::error_is_a_small_typed_value",
+  "python:reference/tests/test_philox_acceptance.py::test_partition_and_overlap",
+]
+
+"RNG-004" = [
+  "rust:tq-testkit::philox_acceptance::uniform_endpoints_and_low_byte_invariance",
+  "python:reference/tests/test_philox_acceptance.py::test_uniform_exact_scalar_bits",
+  "python:reference/tests/test_philox_acceptance.py::test_uniform_discards_only_low_eight_bits",
+  "python:reference/tests/test_ref_philox_developer.py::test_uniform_is_monotone_and_lands_on_the_exact_grid",
+]
+
+"RNG-005" = [
+  "python:tests/test_philox_cross_language.py::test_executed_cross_language_stream",
+  "python:reference/tests/test_philox_acceptance.py::test_manifest_and_canonical_digests",
+  "python:tests/test_philox_checker.py::test_manifest_cannot_redirect_revision",
+  "python:tests/test_philox_checker.py::test_manifest_cannot_select_another_contract",
+  "python:tests/test_philox_checker.py::test_required_fixture_set_is_exact",
+  "python:tests/test_philox_checker.py::test_declared_count_must_match_file",
+  "python:tests/test_philox_checker.py::test_rehashed_malformed_row_cannot_reach_upstream",
+  "python:tests/test_philox_checker.py::test_empty_rehashed_fixture_is_still_rejected",
+  "python:tests/test_philox_checker.py::test_deleted_cases_with_original_manifest_are_rejected",
+  "python:tests/test_philox_checker.py::test_source_hashes_cannot_be_omitted",
+]
+
+"HOST-001" = [
+  "rust:tq-core::host_acceptance::smla_tensor_validation::q",
+  "rust:tq-core::host_acceptance::smla_tensor_validation::kv",
+  "rust:tq-core::host_acceptance::smla_tensor_validation::page_table",
+  "rust:tq-core::host_acceptance::smla_tensor_validation::out",
+  "rust:tq-core::host_acceptance::moe_tensor_validation::x",
+  "rust:tq-core::host_acceptance::moe_tensor_validation::w13",
+  "rust:tq-core::host_acceptance::moe_tensor_validation::topk_ids",
+  "rust:tq-core::host_acceptance::moe_tensor_validation::y",
+]
+
+"HOST-002" = [
+  "rust:tq-core::host_acceptance::wide_spans_are_not_truncated_to_32_bits",
+  "rust:tq-core::host_acceptance::numeric_address_end_and_capacity_are_separate_checks",
+]
+
+"HOST-003" = [
+  "rust:tq-core::host_acceptance::padded_q_idx_out_are_valid_with_natural_alignment",
+  "rust:tq-core::host_acceptance::dimension_boundary_is_per_axis_not_total_elements",
+  "rust:tq-core::host_acceptance::fp8_row_stride_and_exact_last_byte",
+  "rust:tq-core::host_acceptance::bf16_kv_padding_is_a_correctness_layout_not_a_sector_promise",
+]
+
+"HOST-004" = [
+  "rust:tq-core::host_acceptance::empty_cache_and_indices_inside_nonempty_batch",
+  "rust:tq-core::host_acceptance::empty_launch_skips_all_storage_but_keeps_metadata_checks",
+]
+
+"HOST-005" = [
+  "rust:tq-core::host_acceptance::smla_fixed_geometry_rejections",
+  "rust:tq-core::host_acceptance::smla_supported_shapes_formats_and_capacity",
+  "rust:tq-core::host_acceptance::smla_dependent_shapes_are_not_inferred_away",
+  "rust:tq-core::host_acceptance::softmax_scale_is_the_exact_model_constant",
+]
+
+"HOST-006" = ["rust:tq-core::host_acceptance::host_query_plan_checks_each_sequence_and_total"]
+
+"HOST-007" = [
+  "rust:tq-core::host_acceptance::moe_model_geometry_and_scale_layout",
+  "rust:tq-core::host_acceptance::moe_all_formats_shards_and_batch_sizes",
+  "rust:tq-core::host_acceptance::formats_are_distinct_and_group_parser_is_closed",
+]
+
+"HOST-008" = [
+  "rust:tq-core::host_acceptance::smla_output_aliases_and_adjacent_ranges",
+  "rust:tq-core::host_acceptance::moe_output_cannot_overlap_any_input",
+  "rust:tq-core::host_acceptance::unused_allocation_capacity_does_not_create_a_tensor_alias",
+  "rust:tq-core::host_acceptance::alias_policy_conservatively_includes_internal_padding",
+]
+
+"HOST-009" = [
+  "rust:tq-core::host_acceptance::all_error_kinds_are_structured_and_displayed",
+  "rust:tq-core::host_acceptance::returned_copies_cannot_mutate_validated_parameters",
+  "python:tests/test_host_contract_api.py::test_positive_public_api_consumer",
+  "python:tests/test_host_contract_api.py::test_rejects_invariant_bypasses",
+]
+
+"HOST-010" = [
+  "rust:tq-core::host_acceptance::philox_boundary_sweep_uses_an_independent_wide_oracle",
+  "rust:tq-core::host_acceptance::arithmetic_overflow_is_rejected_in_debug_and_release",
+]
+
+"CPU-001" = [
+  "python:tests/test_cpu_checks_acceptance.py::test_source_length_boundaries",
+  "python:tests/test_cpu_checks_acceptance.py::test_source_inventory_failures",
+  "python:tests/test_cpu_checks_acceptance.py::test_source_inventory_is_unique_and_data_is_not_source",
+  "python:tests/test_cpu_cli_acceptance.py::test_length_cli_reads_git_nul_inventory",
+  "python:tests/test_cpu_cli_acceptance.py::test_length_cli_does_not_prune_target_named_source",
+  "python:tests/test_cpu_cli_acceptance.py::test_length_cli_git_failure_is_not_success",
+]
+
+"CPU-002" = [
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_bootstrap_and_external_cpu_are_valid",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_unrelated_cpu_names_remain_allowed",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_real_empty_lists_are_not_an_empty_workspace",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_gpu_declarations_cannot_hide_by_alias_or_target",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_transitive_gpu_leakage",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_testkit_must_stay_dev_only",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_reverse_edge_is_not_approved",
+  "python:tests/test_cpu_checks_acceptance.py::test_dependency_broken_metadata_fails_closed",
+  "python:tests/test_cpu_cli_acceptance.py::test_dependency_cli_checks_actual_workspace",
+  "python:tests/test_cpu_cli_acceptance.py::test_dependency_cli_subprocess_and_bad_data_fail",
+]
+
+"CPU-003" = [
+  "python:tests/test_cpu_checks_acceptance.py::test_manifest_exact_and_parameterized_selectors",
+  "python:tests/test_cpu_checks_acceptance.py::test_manifest_one_test_can_cover_multiple_clauses",
+  "python:tests/test_cpu_checks_acceptance.py::test_manifest_missing_or_false_evidence",
+  "python:tests/test_cpu_inventory_acceptance.py::test_collection_hook_preserves_names_and_excludes_all_markers",
+  "python:tests/test_cpu_inventory_acceptance.py::test_manifest_cli_accepts_real_collection",
+  "python:tests/test_cpu_inventory_acceptance.py::test_manifest_cli_rejects_non_evidence_python",
+  "python:tests/test_cpu_inventory_acceptance.py::test_manifest_cli_rejects_ignored_rust",
+  "python:tests/test_cpu_inventory_acceptance.py::test_manifest_cli_collection_and_catalogue_failures",
+]
+
+"CPU-004" = [
+  "python:tests/test_cpu_checks_acceptance.py::test_coverage_per_crate_counts_and_unchanged_inputs",
+  "python:tests/test_cpu_checks_acceptance.py::test_coverage_relative_paths_root_module_and_extra_files",
+  "python:tests/test_cpu_checks_acceptance.py::test_coverage_raw_metric_boundaries",
+  "python:tests/test_cpu_checks_acceptance.py::test_coverage_absent_and_inconsistent_evidence",
+  "python:tests/test_cpu_cli_acceptance.py::test_coverage_cli_raw_counts_control_exit",
+  "python:tests/test_cpu_cli_acceptance.py::test_coverage_cli_missing_or_invalid_file",
+  "python:tests/test_cpu_cli_acceptance.py::test_coverage_cli_cannot_forget_a_missing_workspace_crate",
+]

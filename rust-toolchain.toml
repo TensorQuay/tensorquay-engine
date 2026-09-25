@@ -1,0 +1,4 @@
+# Pinned to an installed release so the shared test stream cannot drift with the stable alias.
+[toolchain]
+channel = "1.95.0"
+components = ["clippy", "llvm-tools", "rustfmt"]

@@ -1,0 +1,57 @@
+# G-04 dependency audit. The allow-list is DEV-GUIDELINES §2.4; anything outside it needs a
+# decision record, not an entry here.
+#
+# The workspace has zero external dependencies today, so the advisory, ban and source checks
+# have nothing to reject: that is a statement about today's graph, not an assessment of
+# dependencies a future change may add. The licence check is not vacuous, because
+# `private.ignore = false` makes it judge the two unpublished workspace crates themselves.
+
+[graph]
+# Audit every platform and feature, which is stricter than the default build.
+all-features = true
+
+[advisories]
+version = 2
+# No ignores. A known advisory blocks the gate until it is fixed or a decision record exists.
+ignore = []
+# A stale or unfetchable database is a failed check, never a silent pass.
+unmaintained = "all"
+yanked = "deny"
+
+[licenses]
+version = 2
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "Zlib",
+    "BSL-1.0",
+    "CC0-1.0",
+]
+# The workspace crates are unpublished but are still checked, so an unlicensed crate cannot
+# reach the graph by being ours.
+private = { ignore = false }
+confidence-threshold = 0.93
+
+[bans]
+multiple-versions = "deny"
+wildcards = "deny"
+# A workspace path dependency between two unpublished crates has no version to pin, so it is
+# necessarily a wildcard. This exemption is limited to path dependencies of private crates; a
+# registry `foo = "*"` is still denied.
+allow-wildcard-paths = true
+# Nothing is skipped or allowed by exception in this slice.
+deny = []
+skip = []
+skip-tree = []
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

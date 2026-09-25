@@ -1,0 +1,265 @@
+{
+  "gate": "Phase 0 step 0.4 Rust host-contract slice",
+  "date": "2026-09-20",
+  "decision": "accepted",
+  "base_revision": "d7f25560d4767e72eb6542b1d9e22489f3a58a45",
+  "revision_state": "uncommitted working tree",
+  "environment": {
+    "os": "macOS ARM64",
+    "rust": "1.95.0",
+    "llvm": "22.1.2",
+    "cargo_llvm_cov": "0.9.1",
+    "nextest": "0.9.145"
+  },
+  "sha256": {
+    "Cargo.toml": "db1726daa796a1353a5098bdff6507f0e6fbfe08d35d03403705ff37d62cd4a4",
+    "Cargo.lock": "39c6046fcd330d8e0e397e3fab805feb6787970aa83f4a065334788a40479ad5",
+    "crates/tq-core/Cargo.toml": "d170ed84b71d1f228ead75971a535559bf475a7fede5e37471266275670fe7b0",
+    "crates/tq-core/src/lib.rs": "f258d9cd34757fe34d5096a1a26bb09a0321dd19f4eeb05a17e54d569eccbd8c",
+    "crates/tq-core/src/contracts.rs": "927a4ff83aa4864654f0f7eaf8beadee841aeb8de9c483c5ec23309330616f28",
+    "docs/HOST-CONTRACTS.md": "b7a8e771029959176c668f1cf9fc937e13f23356e894bae6bb0ccfe2b0d084cd",
+    "crates/tq-core/tests/host_acceptance.rs": "98d243e8525a868d35cf89249493e620ad9b8a94b14746fc4784fbca19867a55",
+    "crates/tq-core/tests/support/mod.rs": "d69fb07e46766c4dc16936eafd9e899be62fabd47b059d1f4a607731d23b551d",
+    "tests/test_host_contract_api.py": "d659260671a46fc44de76c41415e3ede2e8f20da8d3d20710bc6f74c49af8aad"
+  },
+  "independent_results": {
+    "host_debug_passed": 44,
+    "host_release_passed": 44,
+    "workspace_passed": 51,
+    "external_consumer_passed": 7,
+    "root_harness_passed": 29,
+    "smla_valid_combinations": 256,
+    "moe_valid_combinations": 32,
+    "philox_boundary_cases": 640,
+    "preserved_artifacts": 56
+  },
+  "coverage": {
+    "tq-core/src/contracts.rs": {
+      "lines": {
+        "count": 295,
+        "covered": 295,
+        "percent": 100.0
+      },
+      "regions": {
+        "count": 456,
+        "covered": 456,
+        "notcovered": 0,
+        "percent": 100.0
+      },
+      "functions": {
+        "count": 22,
+        "covered": 22,
+        "percent": 100.0
+      }
+    },
+    "tq-testkit/src/philox.rs": {
+      "lines": {
+        "count": 54,
+        "covered": 54,
+        "percent": 100.0
+      },
+      "regions": {
+        "count": 102,
+        "covered": 102,
+        "notcovered": 0,
+        "percent": 100.0
+      },
+      "functions": {
+        "count": 9,
+        "covered": 9,
+        "percent": 100.0
+      }
+    }
+  },
+  "branch_coverage": "not measured on the stable toolchain",
+  "mutation_source": "crates/tq-core/src/contracts.rs",
+  "mutation_command": "cargo test -p tq-core --test host_acceptance --release --locked --offline",
+  "mutation_protocol": "One exact replacement in a fresh source copy and target directory per probe. Every mutant compiled. The live source was unchanged.",
+  "positive_control": {
+    "name": "positive_control",
+    "compiled": true,
+    "returncode": 0,
+    "passed": 44,
+    "failed": 0
+  },
+  "mutations": [
+    {
+      "name": "softmax_scale",
+      "before": "const SOFTMAX_SCALE: f32 = 0.0625;",
+      "after": "const SOFTMAX_SCALE: f32 = 0.044194174;",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 15,
+      "failed": 29
+    },
+    {
+      "name": "index_limit",
+      "before": "const MAX_INDICES: u64 = 2051;",
+      "after": "const MAX_INDICES: u64 = 2052;",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "allow_head48",
+      "before": "(heads != 32 && heads != 64) || width != 512",
+      "after": "(heads != 32 && heads != 64 && heads != 48) || width != 512",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "query_limit",
+      "before": "const MAX_QUERIES_PER_SEQUENCE: u8 = 4;",
+      "after": "const MAX_QUERIES_PER_SEQUENCE: u8 = 5;",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "query_total",
+      "before": "if planned != tokens {",
+      "after": "if planned > tokens {",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "format_group",
+      "before": "Self::G32E4m3 => 32,",
+      "after": "Self::G32E4m3 => 16,",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 40,
+      "failed": 4
+    },
+    {
+      "name": "fp8_payload",
+      "before": "Self::Fp8E4m3 => 528,",
+      "after": "Self::Fp8E4m3 => 512,",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 40,
+      "failed": 4
+    },
+    {
+      "name": "skip_dtype",
+      "before": "if tensor.dtype != dtype {",
+      "after": "if false && tensor.dtype != dtype {",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 23,
+      "failed": 21
+    },
+    {
+      "name": "dimension_off_by_one",
+      "before": "dim >= DIMENSION_LIMIT",
+      "after": "dim > DIMENSION_LIMIT",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "overstrict_kv_alignment",
+      "before": "const KV_GRANULARITY: u64 = 16;",
+      "after": "const KV_GRANULARITY: u64 = 32;",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 39,
+      "failed": 5
+    },
+    {
+      "name": "one_byte_short",
+      "before": "tensor.buffer_bytes.0 < span",
+      "after": "tensor.buffer_bytes.0 < span.saturating_sub(1)",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 22,
+      "failed": 22
+    },
+    {
+      "name": "span_truncation",
+      "before": "span = reach;",
+      "after": "span = reach & u64::from(u32::MAX);",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 42,
+      "failed": 2
+    },
+    {
+      "name": "span_add_wrap",
+      "before": ".and_then(|r| span.checked_add(r))",
+      "after": ".map(|r| span.wrapping_add(r))",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "padded_overlap",
+      "before": "stride >= needed && stride.is_multiple_of(element)",
+      "after": "stride > 0 && stride.is_multiple_of(element)",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "adjacent_alias",
+      "before": "if out.start < other.end && other.start < out.end {",
+      "after": "if out.start <= other.end && other.start < out.end {",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 41,
+      "failed": 3
+    },
+    {
+      "name": "capacity_alias_regression",
+      "before": "end: tensor.device_address + span,",
+      "after": "end: tensor.device_address + tensor.buffer_bytes.0,",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "empty_storage_check",
+      "before": "if !launching || tensor.shape.contains(&0) {",
+      "after": "if tensor.shape.contains(&0) {",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 43,
+      "failed": 1
+    },
+    {
+      "name": "skip_alias",
+      "before": "if out.start < other.end && other.start < out.end {",
+      "after": "if false && out.start < other.end && other.start < out.end {",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 41,
+      "failed": 3
+    },
+    {
+      "name": "w13_scale_rows",
+      "before": "let w13_scale_shape = [EXPERTS, fused, HIDDEN / group];",
+      "after": "let w13_scale_shape = [EXPERTS, intermediate, HIDDEN / group];",
+      "compiled": true,
+      "returncode": 101,
+      "passed": 29,
+      "failed": 15
+    }
+  ],
+  "not_validated": [
+    "GPU allocation ownership/lifetime/device identity",
+    "physical aliasing or instruction-specific binding",
+    "device tensor contents and numerical kernels",
+    "graph replay and sanitizers",
+    "inference throughput, quality, memory fit or concurrency"
+  ]
+}

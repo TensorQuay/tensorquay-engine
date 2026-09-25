@@ -1,0 +1,318 @@
+{
+  "schema": 1,
+  "gate_date": "2026-09-20",
+  "decision": "accepted for local CPU tooling in Phase 0 step 0.4; hosted CI unverified",
+  "baseline_commit": "28377aad3a51536455a070dfca7d980c702005cd",
+  "platform": "macOS ARM64",
+  "implementation_sha256": {
+    "tools/cpu_checks.py": "012c29dd7efb65bb7cab15a16a9481855da230af9421a3769320df35b81a7080",
+    "tools/tq_pytest_inventory.py": "6b274afe685ad96c1c126dc9358f31dccc9fcd8d2f5d7307d9d3e86afbc92718",
+    "tools/cpu-tools.coveragerc": "957bdfb1a4f390c0169d490a0bd2c6958b8f0b9f749ea28b705ba7a4b4871889",
+    "deny.toml": "a9a2128647e9b363d3a9deea3304387e84171509a05df46d49f46afa2c40c0fc",
+    ".gitleaks.toml": "04a93ab08db711febbf9fb8d15d1886b705dd7056de16c78ae8f212fb1bbdbfb",
+    ".github/workflows/cpu.yml": "f23237ef188453d7c328a8f0f319a3abd23ed805dd3858129b7ec33374c2756a",
+    "tests/manifest.toml": "8cf421d154d8fb11e68e056422f7ba6c8757dcbeb325964b5ead47d7d71c3068",
+    "scripts/check-lengths.sh": "8f09b14ba641b7399906fbd22d609f30c7bf4590f3e72f9b3ad32d18b42bd3c5",
+    "scripts/check-cpu.sh": "a9a1e8b3408605982531da70908e54a7903cb108fa2fe5b3f208d6d55b1d0a6a",
+    "scripts/check-deps.sh": "f995fd546c180ab6d04c7282417d7215e35479a531ea6a0bc4beaff8eb4331d4",
+    "scripts/check-manifest.sh": "481811ca4a26fda7e31e78910f114334ebb34ace43b3611c5a9fe4d26942313e",
+    "scripts/check-coverage.sh": "9effdef39d185dbffc12f05a4299d52e7204a931481dfaea0844dff25a34d6a1"
+  },
+  "independent_acceptance_sha256": {
+    "docs/CPU-CHECKS.md": "abdfc1a80725dc78f959faf568c79efeaa6076bf5861aa0ec77373929c32f7a6",
+    "tests/test_cpu_checks_acceptance.py": "d2d530338ac6c4a6832245c045ce23b1958b2c46f9df8275a34401134ccae6ee",
+    "tests/test_cpu_cli_acceptance.py": "ad156c6a8436386a48991c7a8d8cbab0ea3983b4133faa7d3dcd9b9600b2ad70",
+    "tests/test_cpu_inventory_acceptance.py": "1ebedc8d2b593204be102d23a0802ef10aa422d1639515afbce451e208b2bbea",
+    "tests/test_cpu_runner_acceptance.py": "842ac34ea9bcb96701303ae3109bcf180044f3d5876aa4b5f2426f0aedcd0a3a",
+    "tests/test_cpu_audits_acceptance.py": "a6f6caeae5496fb1dd0fed87cc1adbdbce46247f8dc7a5791a7e417c2ae87757"
+  },
+  "tool_versions": {
+    "rustc": "1.95.0",
+    "cargo": "1.95.0",
+    "uv": "0.10.12",
+    "python": "3.12.4",
+    "numpy": "2.3.3",
+    "pytest": "8.4.2",
+    "pytest-cov": "7.0.0",
+    "ruff": "0.13.1",
+    "cargo-llvm-cov": "0.9.1",
+    "cargo-nextest": "0.9.145",
+    "cargo-deny": "0.20.2",
+    "gitleaks": "8.30.1",
+    "actionlint": "1.7.12"
+  },
+  "verified_macos_release_artifacts": [
+    {
+      "tool": "cargo-deny",
+      "archive_sha256": "fe67d82a10d8597a3549364cb733a3f9cc1bfff9031b7ae46384a9f2a72090c3",
+      "binary_sha256": "5f65c07c459c9514f0c97cc2e2fb6b120daef2d95aee31062cab4816cf027eb1"
+    },
+    {
+      "tool": "gitleaks",
+      "archive_sha256": "b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5",
+      "binary_sha256": "ba52fb1bfabbcde42f032afad3d6e0b19dff8ed105229a16e7caa338bbc0e84f"
+    },
+    {
+      "tool": "actionlint",
+      "archive_sha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+      "binary_sha256": "8db11704dc296f096216db4db65d86cd7f0ebfdf4c38453a1da276b137b88388"
+    }
+  ],
+  "advisory_database": {
+    "url": "https://github.com/RustSec/advisory-db",
+    "revision": "d5c17953a895cf19e8d3ce66eaa42b6fcfe1fb16",
+    "fresh_fetch": true,
+    "check_offline_after_fetch": true
+  },
+  "independent_results": {
+    "strict_cpu_runner_exit": 0,
+    "new_tooling_tests_passed": 246,
+    "new_tooling_suites": {
+      "api": 171,
+      "cli": 22,
+      "inventory": 16,
+      "runner": 30,
+      "actual_audit_tools": 7
+    },
+    "all_root_tests_passed": 275,
+    "reference_independent_passed": 1263,
+    "reference_full_passed": 1522,
+    "reference_statements": {
+      "covered": 470,
+      "total": 470
+    },
+    "reference_branches": {
+      "covered": 150,
+      "total": 150
+    },
+    "rust_tests_debug": 51,
+    "rust_tests_release": 51,
+    "rust_skipped": 0,
+    "rust_coverage": {
+      "tq-core": {
+        "lines": [
+          295,
+          295
+        ],
+        "regions": [
+          456,
+          456
+        ],
+        "functions": [
+          22,
+          22
+        ]
+      },
+      "tq-testkit": {
+        "lines": [
+          54,
+          54
+        ],
+        "regions": [
+          102,
+          102
+        ],
+        "functions": [
+          9,
+          9
+        ]
+      }
+    },
+    "new_python_coverage": {
+      "tools/cpu_checks.py": {
+        "covered_lines": 295,
+        "num_statements": 295,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100",
+        "num_branches": 156,
+        "num_partial_branches": 0,
+        "covered_branches": 156,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100"
+      },
+      "tools/tq_pytest_inventory.py": {
+        "covered_lines": 12,
+        "num_statements": 12,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100"
+      }
+    },
+    "mapped_cpu_clauses": 24,
+    "source_files_checked": 54,
+    "external_rust_dependencies": 0,
+    "gitleaks_history_commits_scanned": 25,
+    "gitleaks_history_findings_after_reviewed_exception": 0,
+    "gitleaks_candidate_tree_findings_after_reviewed_exception": 0,
+    "workflow_actionlint_exit": 0
+  },
+  "deliberate_faults": [
+    {
+      "name": "control",
+      "file": "",
+      "old": "",
+      "new": "",
+      "exit": 0,
+      "totals": [
+        "172 passed"
+      ]
+    },
+    {
+      "name": "source-cap",
+      "file": "tools/cpu_checks.py",
+      "old": "SOURCE_LIMIT = 1000",
+      "new": "SOURCE_LIMIT = 1001",
+      "exit": 1,
+      "totals": [
+        "9 failed",
+        "163 passed"
+      ]
+    },
+    {
+      "name": "unterminated-line",
+      "file": "tools/cpu_checks.py",
+      "old": "return text.count(\"\\n\") + (1 if text and not text.endswith(\"\\n\") else 0)",
+      "new": "return text.count(\"\\n\")",
+      "exit": 1,
+      "totals": [
+        "4 failed",
+        "168 passed"
+      ]
+    },
+    {
+      "name": "gpu-declaration",
+      "file": "tools/cpu_checks.py",
+      "old": "if _is_gpu(name):",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "1 failed",
+        "171 passed"
+      ]
+    },
+    {
+      "name": "gpu-transitive",
+      "file": "tools/cpu_checks.py",
+      "old": "if _is_gpu(by_id[current][\"name\"]):",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "3 failed",
+        "169 passed"
+      ]
+    },
+    {
+      "name": "workspace-direction",
+      "file": "tools/cpu_checks.py",
+      "old": "if not edges <= APPROVED_EDGES:",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "3 failed",
+        "169 passed"
+      ]
+    },
+    {
+      "name": "clause-completeness",
+      "file": "tools/cpu_checks.py",
+      "old": "if set(clauses) != set(required):",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "2 failed",
+        "170 passed"
+      ]
+    },
+    {
+      "name": "test-prefix",
+      "file": "tools/cpu_checks.py",
+      "old": "entry.startswith(f\"{selector}[\")",
+      "new": "entry.startswith(selector)",
+      "exit": 1,
+      "totals": [
+        "1 failed",
+        "171 passed"
+      ]
+    },
+    {
+      "name": "zero-coverage",
+      "file": "tools/cpu_checks.py",
+      "old": "if count <= 0:",
+      "new": "if count < 0:",
+      "exit": 1,
+      "totals": [
+        "3 failed",
+        "169 passed"
+      ]
+    },
+    {
+      "name": "coverage-deficit",
+      "file": "tools/cpu_checks.py",
+      "old": "if covered != count:",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "6 failed",
+        "166 passed"
+      ]
+    },
+    {
+      "name": "unwired-source",
+      "file": "tools/cpu_checks.py",
+      "old": "if source.name != \"lib.rs\" and source.resolve() not in seen:",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "1 failed",
+        "171 passed"
+      ]
+    },
+    {
+      "name": "duplicate-coverage",
+      "file": "tools/cpu_checks.py",
+      "old": "if resolved in seen:",
+      "new": "if False:",
+      "exit": 1,
+      "totals": [
+        "2 failed",
+        "170 passed"
+      ]
+    },
+    {
+      "name": "skipped-evidence",
+      "file": "tools/tq_pytest_inventory.py",
+      "old": "EXCLUDED_MARKERS = (\"skip\", \"skipif\", \"xfail\")",
+      "new": "EXCLUDED_MARKERS = ()",
+      "exit": 1,
+      "totals": [
+        "1 failed",
+        "171 passed"
+      ]
+    }
+  ],
+  "limits": [
+    "All new acceptance tests were authored and controlled by the reviewing lead.",
+    "The 12 fault probes are targeted semantic mutations, not an exhaustive mutation score.",
+    "Rust coverage measures library lines, regions and functions, not stable-toolchain branches.",
+    "New-tooling coverage includes both new Python modules; it does not claim coverage of the older guard or oracle generators.",
+    "GitHub Linux workflow execution and remote branch protection remain unverified; no remote exists.",
+    "Public CI reports private identifier checking pending; maintainers must run the full guard before merge.",
+    "No G-11/G-12, ModelSpec, CUDA kernel, model execution or performance result is claimed.",
+    "No commit, push, model download, GPU session or spend occurred in this slice.",
+    "The older git guard remains outside the new Ruff scope; its existing style findings need a separate reviewed change."
+  ]
+}
