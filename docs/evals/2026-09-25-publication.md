@@ -56,5 +56,11 @@ G-11/G-12, the hardware gates, EQV-001, QUAL-S and WL-001 remain open at their s
 retain their own dates and results; this rerun does not claim to regenerate every external PyTorch oracle fixture.
 
 The hosted workflow installs Gitleaks and actionlint directly from their pinned official release archives, with
-SHA-256 checks before extraction. They are Go tools and are not supported by the Rust tool installer. Tool versions
+SHA-256 checks before extraction. They are Go tools and are not supported by the Rust tool installer. Audit-tool versions
 and all acceptance thresholds remain unchanged.
+
+The publication environment pins pytest 9.0.3 to address
+[GHSA-6w46-j5rx-g56g](https://github.com/advisories/GHSA-6w46-j5rx-g56g), a temporary-directory handling issue in
+earlier pytest releases. This changes a development dependency only. The complete CPU gate passed again with this
+version at the test counts and coverage shown above. Earlier reports retain their
+original dependency versions. NumPy, numerical sources, fixtures and test assertions are unchanged.
