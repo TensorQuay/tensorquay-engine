@@ -35,11 +35,32 @@ jobs:
         with:
           version: "0.10.12"
 
-      # install-action resolves each tool from its official release and verifies the published
-      # checksum. gitleaks is installed as the CLI binary, not as the licensed action.
+      # The Rust installer resolves official releases and verifies their checksums.
       - uses: taiki-e/install-action@9114bf4d891761788c546334fd37538eae1bf8b3 # v2.87.16
         with:
-          tool: cargo-nextest@0.9.145,cargo-llvm-cov@0.9.1,cargo-deny@0.20.2,gitleaks@8.30.1,actionlint@1.7.12
+          tool: cargo-nextest@0.9.145,cargo-llvm-cov@0.9.1,cargo-deny@0.20.2
+
+      # These Go binaries are not supported by the Rust installer. Their archive digests are
+      # pinned from the official release checksums; extract only the named executable.
+      - name: Install pinned secret scanner and workflow validator
+        run: |
+          set -euo pipefail
+          audit_dir="${RUNNER_TEMP}/tq-audit-tools"
+          mkdir -p "${audit_dir}"
+          cd "${audit_dir}"
+          curl --fail --location --silent --show-error \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output gitleaks.tar.gz
+          curl --fail --location --silent --show-error \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz \
+            --output actionlint.tar.gz
+          printf '%s  %s\n' \
+            551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb gitleaks.tar.gz \
+            8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8 actionlint.tar.gz \
+            | sha256sum --check --strict
+          tar -xzf gitleaks.tar.gz gitleaks
+          tar -xzf actionlint.tar.gz actionlint
+          printf '%s\n' "${audit_dir}" >> "${GITHUB_PATH}"
 
       # Populate the cache once, online, so every gate below can run with --offline --locked.
       - name: Materialise the pinned Python environment

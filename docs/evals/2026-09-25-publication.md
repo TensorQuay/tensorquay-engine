@@ -54,3 +54,7 @@ Document links and the complete candidate-file inventory were checked before pub
 The CPU suites do not demonstrate CUDA compiler execution, GPU performance, a usable context window or concurrency.
 G-11/G-12, the hardware gates, EQV-001, QUAL-S and WL-001 remain open at their specified phases. Historical reports
 retain their own dates and results; this rerun does not claim to regenerate every external PyTorch oracle fixture.
+
+The hosted workflow installs Gitleaks and actionlint directly from their pinned official release archives, with
+SHA-256 checks before extraction. They are Go tools and are not supported by the Rust tool installer. Tool versions
+and all acceptance thresholds remain unchanged.
